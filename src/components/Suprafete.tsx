@@ -70,7 +70,7 @@ export default function Suprafete() {
                 {spec.stat}
               </p>
               {spec.footnote && (
-                <p className="text-brand-text-secondary text-xs mt-3 text-left">
+                <p className="text-brand-text-secondary text-xs mt-3 text-right">
                   {spec.footnote}
                 </p>
               )}
