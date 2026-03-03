@@ -13,34 +13,60 @@ const navLinks = [
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const [navVisible, setNavVisible] = useState(true)
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 10)
+    let lastScrollY = window.scrollY
+
+    const onScroll = () => {
+      const currentY = window.scrollY
+
+      if (currentY < 10) {
+        // At top — full centered navbar
+        setScrolled(false)
+        setNavVisible(true)
+      } else if (currentY > lastScrollY) {
+        // Scrolling down — hide everything
+        setNavVisible(false)
+        setScrolled(true)
+      } else {
+        // Scrolling up — show minimal (logo left, CTA right)
+        setNavVisible(true)
+        setScrolled(true)
+      }
+
+      lastScrollY = currentY
+    }
+
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
   return (
     <motion.nav
-      initial={{ y: -20, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.5 }}
+      variants={{
+        hidden: { y: '-100%' },
+        visible: { y: 0 },
+      }}
+      initial="hidden"
+      animate={navVisible ? 'visible' : 'hidden'}
+      transition={{ duration: 0.3, ease: 'easeInOut' }}
       className="fixed top-0 left-0 right-0 z-50"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className={`relative flex items-center h-24 md:h-28 transition-all duration-300 ${scrolled ? 'justify-between' : 'justify-center'}`}>
+        <div className={`relative flex items-center gap-4 md:gap-10 h-24 md:h-28 ${scrolled ? 'justify-between' : 'justify-center'}`}>
 
-          {/* Logo — animates from center to left on scroll */}
+          {/* Logo — layout-animates from center to left on scroll */}
           <motion.a layout="position" href="#" className="flex items-center group flex-shrink-0">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="/logo.svg"
               alt="InkSpired VibePrint logo"
-              className="h-20 md:h-24 w-auto flex-shrink-0"
+              className="h-24 md:h-28 w-auto flex-shrink-0"
             />
           </motion.a>
 
-          {/* Desktop nav links — fade out on scroll */}
+          {/* Desktop nav links — only visible at top */}
           <AnimatePresence>
             {!scrolled && (
               <motion.div
@@ -64,7 +90,7 @@ export default function Navbar() {
             )}
           </AnimatePresence>
 
-          {/* CTA — animates from center to right on scroll, hidden on mobile */}
+          {/* CTA — layout-animates from center to right on scroll */}
           <motion.a
             layout="position"
             href="#formular"
