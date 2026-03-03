@@ -7,7 +7,11 @@ export const metadata: Metadata = {
 }
 
 export default function TermeniSiConditii() {
-  const lastUpdated = new Date().toLocaleDateString('ro-RO')
+  const lastUpdated = new Date('2026-03-03').toLocaleDateString('ro-RO', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+  })
 
   return (
     <main className="min-h-screen bg-brand-bg py-24 px-4">
@@ -120,7 +124,7 @@ export default function TermeniSiConditii() {
             </li>
             <li>
               Utilizarea de materiale UV-cured, rezistente la uzură și mediu, conform
-              specificațiilor tehnice asumate la confirma comezii.
+              specificațiilor tehnice asumate la confirmarea comenzii.
             </li>
           </ul>
         </section>
