@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 
 export const metadata: Metadata = {
-  title: 'Termeni și Condiții — Vibe Print',
+  title: 'Termeni și Condiții — InkSpired VibePrint',
   robots: { index: false },
 }
 

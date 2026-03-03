@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 
 export const metadata: Metadata = {
-  title: 'Politică de Confidențialitate — Vibe Print',
+  title: 'Politică de Confidențialitate — InkSpired VibePrint',
   robots: { index: false },
 }
 
@@ -202,7 +202,7 @@ export default function PoliticaConfidentialitate() {
             <strong className="text-white">HTTPS</strong>. Fotografiile încărcate prin
             formularul de estimare nu sunt partajate cu terțe părți fără
             consimțământul dumneavoastră explicit și sunt accesate exclusiv de echipa
-            Vibe Print în scopul pregătirii ofertei.
+            InkSpired VibePrint în scopul pregătirii ofertei.
           </p>
         </section>
 

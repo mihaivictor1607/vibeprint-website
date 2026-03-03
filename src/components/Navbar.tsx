@@ -31,13 +31,16 @@ export default function Navbar() {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 md:h-20">
-          {/* Logo badge */}
+          {/* Logo */}
           <a href="#" className="flex items-center gap-3 group">
-            <div className="w-10 h-10 rounded-full bg-brand-teal flex items-center justify-center font-extrabold text-brand-bg text-sm flex-shrink-0">
-              VP
-            </div>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/logo.svg"
+              alt="InkSpired VibePrint logo"
+              className="h-10 w-auto flex-shrink-0"
+            />
             <span className="text-white font-bold text-lg hidden sm:block group-hover:text-brand-teal transition-colors">
-              VibePrint
+              InkSpired VibePrint
             </span>
           </a>
 

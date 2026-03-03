@@ -9,10 +9,9 @@ export default function Footer() {
           {/* Column 1 — Brand */}
           <div>
             <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 rounded-full bg-brand-teal flex items-center justify-center font-extrabold text-brand-bg text-sm flex-shrink-0">
-                VP
-              </div>
-              <span className="text-white font-bold text-lg">VibePrint</span>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/logo.svg" alt="InkSpired VibePrint logo" className="h-10 w-auto flex-shrink-0" />
+              <span className="text-white font-bold text-lg">InkSpired VibePrint</span>
             </div>
             <p className="text-brand-text-secondary text-sm leading-relaxed">
               Imprimare digitală UV direct pe perete, pe orice suprafață.

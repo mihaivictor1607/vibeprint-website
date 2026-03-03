@@ -16,7 +16,7 @@ export default function DespreNoi() {
           transition={{ duration: 0.7 }}
         >
           <h2 className="text-3xl md:text-5xl font-extrabold text-white mb-6">
-            Despre Vibe Print
+            Despre InkSpired VibePrint
           </h2>
 
           <p className="text-brand-text-secondary text-lg leading-relaxed mb-6">
@@ -26,7 +26,7 @@ export default function DespreNoi() {
           </p>
 
           <p className="text-brand-text-secondary text-lg leading-relaxed mb-8">
-            Vibe Print este o{' '}
+            InkSpired VibePrint este o{' '}
             <strong className="text-white">întreprindere socială</strong>{' '}
             înregistrată conform{' '}
             <strong className="text-white">Legii 219/2015</strong>.
