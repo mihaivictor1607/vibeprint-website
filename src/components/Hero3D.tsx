@@ -1,21 +1,10 @@
 'use client'
 
-import { Suspense, useState, useCallback } from 'react'
-import { Canvas } from '@react-three/fiber'
-import { motion } from 'framer-motion'
 import dynamic from 'next/dynamic'
+import { motion } from 'framer-motion'
 
-// Dynamically import ParticleField to ensure no SSR issues
-const ParticleField = dynamic(() => import('./hero/ParticleField'), { ssr: false })
-
-function WallPlane() {
-  return (
-    <mesh position={[0, 0, -2]}>
-      <planeGeometry args={[30, 18]} />
-      <meshStandardMaterial color="#0D0A1A" roughness={0.9} />
-    </mesh>
-  )
-}
+// ssr: false — canvas + CDN import must run client-side only
+const TubesBackground = dynamic(() => import('./ui/neon-flow'), { ssr: false })
 
 const textVariants = {
   hidden: { opacity: 0, y: 30 },
@@ -27,41 +16,14 @@ const textVariants = {
 }
 
 export default function Hero3D() {
-  const [mouse, setMouse] = useState({ x: 0, y: 0 })
-
-  const handleMouseMove = useCallback((e: React.MouseEvent<HTMLElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect()
-    setMouse({
-      x: ((e.clientX - rect.left) / rect.width - 0.5) * 2,
-      y: ((e.clientY - rect.top) / rect.height - 0.5) * 2,
-    })
-  }, [])
-
   return (
-    <section
-      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-brand-bg"
-      onMouseMove={handleMouseMove}
-    >
-      {/* 3D Canvas — fills the background */}
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-brand-bg">
+      {/* NeonFlow animation — fills the background */}
       <div className="absolute inset-0">
-        <Canvas
-          camera={{ position: [0, 0, 8], fov: 60 }}
-          dpr={[1, 1.5]}
-          gl={{ antialias: false }}
-        >
-          <ambientLight intensity={0.4} />
-          <Suspense fallback={null}>
-            <WallPlane />
-            <ParticleField
-              count={typeof window !== 'undefined' && window.innerWidth < 768 ? 800 : 2000}
-              mouseX={mouse.x}
-              mouseY={mouse.y}
-            />
-          </Suspense>
-        </Canvas>
+        <TubesBackground className="w-full h-full" />
       </div>
 
-      {/* Gradient overlay: fades 3D scene into page */}
+      {/* Gradient overlay: fades animation into page */}
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-brand-bg pointer-events-none" />
 
       {/* Hero text content */}
