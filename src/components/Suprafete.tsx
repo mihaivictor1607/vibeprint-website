@@ -4,36 +4,28 @@ import { useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
 
 interface Spec {
-  icon: string
-  value: string
-  label: string
-  note: string
+  title: string
+  stat: string
+  footnote?: string
 }
 
 const specs: Spec[] = [
   {
-    icon: '📐',
-    value: 'până la 4 m',
-    label: 'Înălțime maximă',
-    note: 'Orice perete, oricât de înalt',
+    title: 'Înălțime maximă',
+    stat: 'până la 4 m',
   },
   {
-    icon: '↔️',
-    value: 'Nelimitată',
-    label: 'Lungime',
-    note: 'Printuri continue, fără îmbinări',
+    title: 'Lungime print',
+    stat: 'nelimitată',
   },
   {
-    icon: '⏳',
-    value: '7–10 ani',
-    label: 'Durabilitate interior',
-    note: '3–6 ani exterior, variabil după vreme',
+    title: 'Design interior',
+    stat: 'Durabilitate 7–10 ani',
   },
   {
-    icon: '🎨',
-    value: 'Fotografică',
-    label: 'Rezoluție',
-    note: 'Culori vii, detalii fine, UV-fixat',
+    title: 'Design exterior',
+    stat: 'Durabilitate 3–6 ani',
+    footnote: '*În funcție de condițiile meteo',
   },
 ]
 
@@ -65,18 +57,23 @@ export default function Suprafete() {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-4xl mx-auto">
           {specs.map((spec, i) => (
             <motion.div
-              key={spec.label}
+              key={spec.title}
               initial={{ opacity: 0, y: 40 }}
               animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
               transition={{ duration: 0.5, delay: i * 0.12 }}
               className="bg-white/5 border border-white/10 rounded-2xl p-8 hover:border-brand-teal/50 hover:bg-brand-teal/5 transition-all duration-300"
             >
-              <div className="text-3xl mb-4" aria-hidden="true">{spec.icon}</div>
-              <p className="text-brand-teal text-4xl font-extrabold mb-2 leading-none">
-                {spec.value}
+              <p className="text-white text-2xl font-extrabold mb-2">
+                {spec.title}
               </p>
-              <p className="text-white font-semibold text-lg mb-1">{spec.label}</p>
-              <p className="text-brand-text-secondary text-sm">{spec.note}</p>
+              <p className="text-brand-teal text-3xl font-extrabold leading-snug mb-2">
+                {spec.stat}
+              </p>
+              {spec.footnote && (
+                <p className="text-brand-text-secondary text-xs mt-3">
+                  {spec.footnote}
+                </p>
+              )}
             </motion.div>
           ))}
         </div>
