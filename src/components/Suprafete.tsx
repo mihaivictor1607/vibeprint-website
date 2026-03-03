@@ -20,11 +20,11 @@ const specs: Spec[] = [
   },
   {
     title: 'Design interior',
-    stat: 'Durabilitate 7–10 ani',
+    stat: 'durabilitate 7–10 ani',
   },
   {
     title: 'Design exterior',
-    stat: 'Durabilitate 3–6 ani',
+    stat: 'durabilitate 3–6 ani',
     footnote: '*În funcție de condițiile meteo',
   },
 ]
@@ -61,16 +61,16 @@ export default function Suprafete() {
               initial={{ opacity: 0, y: 40 }}
               animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
               transition={{ duration: 0.5, delay: i * 0.12 }}
-              className="bg-white/5 border border-white/10 rounded-2xl p-8 hover:border-brand-teal/50 hover:bg-brand-teal/5 transition-all duration-300"
+              className="bg-white/5 border border-white/10 rounded-2xl p-8 hover:border-brand-teal/50 hover:bg-brand-teal/5 transition-all duration-300 text-center"
             >
-              <p className="text-white text-2xl font-extrabold mb-2">
+              <p className="text-white text-3xl font-extrabold mb-2">
                 {spec.title}
               </p>
-              <p className="text-brand-teal text-3xl font-extrabold leading-snug mb-2">
+              <p className="text-brand-teal text-4xl font-extrabold leading-snug mb-2">
                 {spec.stat}
               </p>
               {spec.footnote && (
-                <p className="text-brand-text-secondary text-xs mt-3">
+                <p className="text-brand-text-secondary text-xs mt-3 text-left">
                   {spec.footnote}
                 </p>
               )}
