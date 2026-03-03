@@ -3,7 +3,14 @@
 import { useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
 
-const specs = [
+interface Spec {
+  icon: string
+  value: string
+  label: string
+  note: string
+}
+
+const specs: Spec[] = [
   {
     icon: '📐',
     value: 'până la 4 m',
@@ -31,7 +38,7 @@ const specs = [
 ]
 
 export default function Suprafete() {
-  const ref = useRef(null)
+  const ref = useRef<HTMLElement>(null)
   const inView = useInView(ref, { once: true, margin: '-100px' })
 
   return (
@@ -43,7 +50,7 @@ export default function Suprafete() {
       <div className="max-w-7xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
+          animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
@@ -60,11 +67,11 @@ export default function Suprafete() {
             <motion.div
               key={spec.label}
               initial={{ opacity: 0, y: 40 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
+              animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
               transition={{ duration: 0.5, delay: i * 0.12 }}
               className="bg-white/5 border border-white/10 rounded-2xl p-8 hover:border-brand-teal/50 hover:bg-brand-teal/5 transition-all duration-300"
             >
-              <div className="text-3xl mb-4">{spec.icon}</div>
+              <div className="text-3xl mb-4" aria-hidden="true">{spec.icon}</div>
               <p className="text-brand-teal text-4xl font-extrabold mb-2 leading-none">
                 {spec.value}
               </p>
