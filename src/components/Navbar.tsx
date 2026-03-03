@@ -30,28 +30,30 @@ export default function Navbar() {
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16 md:h-20">
-          {/* Logo */}
-          <a href="#" className="flex items-center group">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/logo.svg"
-              alt="InkSpired VibePrint logo"
-              className="h-14 md:h-16 w-auto flex-shrink-0"
-            />
-          </a>
+        <div className="flex items-center justify-between h-24 md:h-28">
+          {/* Logo + Nav Links grouped left */}
+          <div className="flex items-center gap-6 md:gap-10">
+            <a href="#" className="flex items-center group">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/logo.svg"
+                alt="InkSpired VibePrint logo"
+                className="h-20 md:h-24 w-auto flex-shrink-0"
+              />
+            </a>
 
-          {/* Desktop nav links */}
-          <div className="hidden md:flex items-center gap-8">
-            {navLinks.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                className="text-brand-text-secondary hover:text-brand-teal transition-colors duration-200 text-sm font-medium"
-              >
-                {link.label}
-              </a>
-            ))}
+            {/* Desktop nav links */}
+            <div className="hidden md:flex items-center gap-8">
+              {navLinks.map((link) => (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  className="text-brand-text-secondary hover:text-brand-teal transition-colors duration-200 text-sm font-medium"
+                >
+                  {link.label}
+                </a>
+              ))}
+            </div>
           </div>
 
           {/* Desktop CTA + Mobile hamburger */}
