@@ -32,16 +32,13 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 md:h-20">
           {/* Logo */}
-          <a href="#" className="flex items-center gap-3 group">
+          <a href="#" className="flex items-center group">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="/logo.svg"
               alt="InkSpired VibePrint logo"
-              className="h-10 w-auto flex-shrink-0"
+              className="h-14 md:h-16 w-auto flex-shrink-0"
             />
-            <span className="text-white font-bold text-lg hidden sm:block group-hover:text-brand-teal transition-colors">
-              InkSpired VibePrint
-            </span>
           </a>
 
           {/* Desktop nav links */}
