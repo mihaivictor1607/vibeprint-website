@@ -7,19 +7,19 @@ const features = [
   {
     icon: '🎨',
     title: 'Orice Design',
-    description: 'De la ilustrații fine la fotografii hiper-realiste — dacă există în format digital, îl imprimăm pe perete. Rezoluție fotografică, culori vii.',
+    description: 'De la ilustrații fine la fotografii hiper-realiste — tu alegi designul, noi îl imprimăm la rezoluție fotografică, cu culori vii.',
     accent: 'text-brand-teal',
   },
   {
     icon: '🧱',
     title: 'Orice Suprafață',
-    description: 'Tencuială, rigips, beton, cărămidă, lemn, MDF, sticlă, faianță. Interior sau exterior. Fără panouri, fără tapete, fără lipici.',
+    description: 'Tencuială, rigips, beton, cărămidă, lemn, MDF, sticlă, faianță. Interior sau exterior. Fără panouri, fără tapet, fără mizerie.',
     accent: 'text-brand-purple',
   },
   {
     icon: '⚡',
     title: 'Rapid & Durabil',
-    description: 'Imprimare direct pe perete, la fața locului. Cerneală UV-curabilă rezistentă la umiditate și lumină solară. Gata în câteva ore.',
+    description: 'Imprimare direct pe perete, la fața locului. Cerneală UV cu fixare instantanee, rezistentă la umiditate și lumină solară. Gata în câteva ore.',
     accent: 'text-brand-indigo',
   },
 ]
@@ -38,11 +38,10 @@ export default function CeFacem() {
           className="text-center mb-16"
         >
           <h2 className="text-3xl md:text-5xl font-extrabold text-white mb-4">
-            Ce facem, de fapt?
+            Ce putem face?
           </h2>
-          <p className="text-brand-text-secondary text-lg max-w-2xl mx-auto">
-            Imprimăm direct pe peretele tău. Fără tapete. Fără panouri.
-            Fără mizerie. Doar artă pură, fixată cu UV.
+          <p className="text-brand-text-secondary text-lg max-w-2xl mx-auto text-center">
+            Imprimăm direct pe peretele tău — de la idee la artă, fixată cu UV.
           </p>
         </motion.div>
 
@@ -55,8 +54,10 @@ export default function CeFacem() {
               transition={{ duration: 0.6, delay: i * 0.15 }}
               className="bg-white/5 border border-white/10 rounded-2xl p-8 hover:border-brand-teal/50 transition-colors duration-300"
             >
-              <div className="text-4xl mb-4">{feature.icon}</div>
-              <h3 className={`font-bold text-xl mb-3 ${feature.accent}`}>{feature.title}</h3>
+              <div className="flex items-center justify-center gap-3 mb-4">
+                <span className="text-5xl">{feature.icon}</span>
+                <h3 className={`font-bold text-[22px] ${feature.accent}`}>{feature.title}</h3>
+              </div>
               <p className="text-brand-text-secondary leading-relaxed">{feature.description}</p>
             </motion.div>
           ))}
