@@ -36,9 +36,8 @@ export interface GalleryItem {
   label: string
 }
 
-// Degrees per frame for 1.5s per face at 60fps
-// 360° / (faceCount * 1.5s) / 60fps
-const DEG_PER_SECOND = (faceCount: number) => 360 / (faceCount * 1.5)
+// Degrees per second: 360° / (faceCount * 4.5s per face)
+const DEG_PER_SECOND = (faceCount: number) => 360 / (faceCount * 4.5)
 
 const CarouselInner = memo(function CarouselInner({
   handleClick,
