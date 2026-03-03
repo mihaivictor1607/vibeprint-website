@@ -1,6 +1,6 @@
 'use client'
 
-import { memo, useEffect, useLayoutEffect, useState } from 'react'
+import { memo, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import {
   AnimatePresence,
   motion,
@@ -9,7 +9,6 @@ import {
   useTransform,
 } from 'framer-motion'
 
-// SSR-safe layout effect
 const useIsomorphicLayoutEffect =
   typeof window !== 'undefined' ? useLayoutEffect : useEffect
 
@@ -30,14 +29,16 @@ function useMediaQuery(query: string): boolean {
   return matches
 }
 
-const duration = 0.15
-const transition = { duration, ease: [0.32, 0.72, 0, 1] as const }
-const transitionOverlay = { duration: 0.5, ease: [0.32, 0.72, 0, 1] as const }
+const transitionOverlay = { duration: 0.4, ease: [0.32, 0.72, 0, 1] as const }
 
-interface GalleryItem {
+export interface GalleryItem {
   src: string
   label: string
 }
+
+// Degrees per frame for 1.5s per face at 60fps
+// 360° / (faceCount * 1.5s) / 60fps
+const DEG_PER_SECOND = (faceCount: number) => 360 / (faceCount * 1.5)
 
 const CarouselInner = memo(function CarouselInner({
   handleClick,
@@ -45,7 +46,7 @@ const CarouselInner = memo(function CarouselInner({
   items,
   isCarouselActive,
 }: {
-  handleClick: (item: GalleryItem, index: number) => void
+  handleClick: (item: GalleryItem) => void
   controls: ReturnType<typeof useAnimation>
   items: GalleryItem[]
   isCarouselActive: boolean
@@ -56,10 +57,34 @@ const CarouselInner = memo(function CarouselInner({
   const faceWidth = cylinderWidth / faceCount
   const radius = cylinderWidth / (2 * Math.PI)
   const rotation = useMotionValue(0)
-  const transform = useTransform(
-    rotation,
-    (v) => `rotate3d(0, 1, 0, ${v}deg)`
-  )
+  const transform = useTransform(rotation, (v) => `rotate3d(0, 1, 0, ${v}deg)`)
+
+  const isDragging = useRef(false)
+  const frameRef = useRef<number | null>(null)
+  const degPerSec = DEG_PER_SECOND(faceCount)
+
+  useEffect(() => {
+    if (!isCarouselActive) {
+      if (frameRef.current) cancelAnimationFrame(frameRef.current)
+      return
+    }
+
+    let lastTime: number | null = null
+
+    const tick = (time: number) => {
+      if (lastTime !== null && !isDragging.current) {
+        const delta = time - lastTime
+        rotation.set(rotation.get() + (degPerSec * delta) / 1000)
+      }
+      lastTime = time
+      frameRef.current = requestAnimationFrame(tick)
+    }
+
+    frameRef.current = requestAnimationFrame(tick)
+    return () => {
+      if (frameRef.current) cancelAnimationFrame(frameRef.current)
+    }
+  }, [isCarouselActive, degPerSec, rotation])
 
   return (
     <div
@@ -70,45 +95,40 @@ const CarouselInner = memo(function CarouselInner({
         drag={isCarouselActive ? 'x' : false}
         className="relative flex h-full origin-center cursor-grab justify-center active:cursor-grabbing"
         style={{ transform, rotateY: rotation, width: cylinderWidth, transformStyle: 'preserve-3d' }}
-        onDrag={(_, info) =>
-          isCarouselActive && rotation.set(rotation.get() + info.offset.x * 0.05)
-        }
-        onDragEnd={(_, info) =>
-          isCarouselActive &&
+        onDragStart={() => { isDragging.current = true }}
+        onDrag={(_, info) => {
+          rotation.set(rotation.get() + info.offset.x * 0.05)
+        }}
+        onDragEnd={(_, info) => {
+          isDragging.current = false
           controls.start({
             rotateY: rotation.get() + info.velocity.x * 0.05,
             transition: { type: 'spring', stiffness: 100, damping: 30, mass: 0.1 },
           })
-        }
+        }}
         animate={controls}
       >
         {items.map((item, i) => (
           <motion.div
             key={`${item.src}-${i}`}
-            className="absolute flex h-full origin-center items-center justify-center rounded-2xl p-2"
+            className="absolute flex h-full origin-center items-center justify-center p-2"
             style={{
               width: `${faceWidth}px`,
               transform: `rotateY(${i * (360 / faceCount)}deg) translateZ(${radius}px)`,
             }}
-            onClick={() => handleClick(item, i)}
+            onClick={() => handleClick(item)}
           >
             <motion.div
               layoutId={`card-${item.src}`}
               className="w-full rounded-2xl overflow-hidden border border-white/10 hover:border-brand-teal/60 transition-colors duration-300 cursor-pointer bg-brand-surface"
               style={{ aspectRatio: '4/3' }}
-              initial={{ filter: 'blur(4px)' }}
-              animate={{ filter: 'blur(0px)' }}
-              transition={transition}
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={item.src}
                 alt={item.label}
-                className="w-full h-full object-contain p-4"
+                className="w-full h-full object-cover"
               />
-              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-brand-bg/90 to-transparent px-4 py-3">
-                <span className="text-white/80 text-sm font-medium">{item.label}</span>
-              </div>
             </motion.div>
           </motion.div>
         ))}
@@ -142,7 +162,7 @@ export function ThreeDCarousel({ items }: { items: GalleryItem[] }) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={handleClose}
-            className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 backdrop-blur-sm"
+            className="fixed inset-0 bg-black/75 flex items-center justify-center z-50 backdrop-blur-sm"
             transition={transitionOverlay}
           >
             <motion.div
@@ -154,17 +174,15 @@ export function ThreeDCarousel({ items }: { items: GalleryItem[] }) {
               <img
                 src={activeItem.src}
                 alt={activeItem.label}
-                className="w-full object-contain p-8 max-h-[70vh]"
+                className="w-full object-contain max-h-[80vh]"
               />
-              <div className="px-6 py-4 border-t border-white/10 flex items-center justify-between">
-                <span className="text-white font-semibold text-lg">{activeItem.label}</span>
-                <button
-                  onClick={handleClose}
-                  className="text-brand-text-secondary hover:text-white transition-colors text-sm"
-                >
-                  Închide ✕
-                </button>
-              </div>
+              <button
+                onClick={handleClose}
+                className="absolute top-4 right-4 text-white/60 hover:text-white bg-black/40 hover:bg-black/60 rounded-full w-8 h-8 flex items-center justify-center transition-colors text-sm"
+                aria-label="Închide"
+              >
+                ✕
+              </button>
             </motion.div>
           </motion.div>
         )}

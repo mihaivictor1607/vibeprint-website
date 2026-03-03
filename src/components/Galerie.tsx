@@ -5,12 +5,12 @@ import { motion, useInView } from 'framer-motion'
 import { ThreeDCarousel } from './ui/3d-carousel'
 
 const galleryItems = [
-  { src: '/gallery/brand-vision.svg', label: 'Brand Vision' },
-  { src: '/gallery/design-interior.svg', label: 'Design Interior' },
-  { src: '/gallery/design-personalizat.svg', label: 'Design Personalizat' },
-  { src: '/gallery/brand.svg', label: 'Brand Identity' },
-  { src: '/gallery/pub.svg', label: 'Publicitate' },
-  { src: '/gallery/transformare-urbana.svg', label: 'Transformare Urbană' },
+  { src: '/gallery/brand-vision.png', label: 'Brand Vision' },
+  { src: '/gallery/design-interior.png', label: 'Design Interior' },
+  { src: '/gallery/design-personalizat.png', label: 'Design Personalizat' },
+  { src: '/gallery/brand.png', label: 'Brand Identity' },
+  { src: '/gallery/pub.png', label: 'Publicitate' },
+  { src: '/gallery/transformare-urbana.png', label: 'Transformare Urbană' },
 ]
 
 export default function Galerie() {
