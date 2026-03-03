@@ -14,7 +14,7 @@ export function TubesBackground({ children, className }: TubesBackgroundProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
 
   useEffect(() => {
-    let mounted = true
+    let cleanup: (() => void) | undefined
 
     const init = async () => {
       if (!canvasRef.current) return
@@ -22,20 +22,22 @@ export function TubesBackground({ children, className }: TubesBackgroundProps) {
         // webpackIgnore tells webpack to leave this as a runtime browser import
         // @ts-ignore
         const mod = await import(/* webpackIgnore: true */ 'https://cdn.jsdelivr.net/npm/threejs-components@0.0.19/build/cursors/tubes1.min.js')
-        if (!mounted) return
-        mod.default(canvasRef.current, {
+        if (!canvasRef.current) return
+        const instance = mod.default(canvasRef.current, {
           tubes: {
             colors: TUBE_COLORS,
             lights: { intensity: 200, colors: LIGHT_COLORS },
           },
         })
+        if (instance?.destroy) cleanup = () => instance.destroy()
+        else if (instance?.dispose) cleanup = () => instance.dispose()
       } catch (err) {
         console.error('NeonFlow: failed to load tubes', err)
       }
     }
 
     init()
-    return () => { mounted = false }
+    return () => { cleanup?.() }
   }, [])
 
   return (
