@@ -55,10 +55,10 @@ export default function CeFacem() {
               className="bg-white/5 border border-white/10 rounded-2xl p-8 hover:border-brand-teal/50 transition-colors duration-300"
             >
               <div className="flex items-center justify-center gap-3 mb-4">
-                <span className="text-5xl">{feature.icon}</span>
+                <span className="text-5xl w-12 flex items-center justify-center flex-shrink-0">{feature.icon}</span>
                 <h3 className={`font-bold text-[22px] ${feature.accent}`}>{feature.title}</h3>
               </div>
-              <p className="text-brand-text-secondary leading-relaxed">{feature.description}</p>
+              <p className="text-brand-text-secondary leading-relaxed text-center">{feature.description}</p>
             </motion.div>
           ))}
         </div>
