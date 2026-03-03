@@ -40,37 +40,18 @@ export default function Hero3D() {
           <span className="text-brand-teal">într-o operă de artă.</span>
         </motion.h1>
 
-        <motion.p
+        <motion.div
           custom={1}
           variants={textVariants}
           initial="hidden"
           animate="visible"
-          className="text-brand-text-secondary text-lg md:text-xl mb-10 leading-relaxed"
-        >
-          Imprimare digitală UV direct pe perete, pe orice suprafață.
-          <br className="hidden sm:block" />
-          București &amp; Ilfov · de la{' '}
-          <strong className="text-white">~100 EUR/m²</strong>
-        </motion.p>
-
-        <motion.div
-          custom={2}
-          variants={textVariants}
-          initial="hidden"
-          animate="visible"
-          className="flex flex-col sm:flex-row gap-4 justify-center"
+          className="flex justify-center"
         >
           <a
             href="#formular"
             className="bg-brand-teal text-brand-bg font-bold px-8 py-4 rounded-full text-lg hover:bg-brand-teal/90 transition-colors focus:outline-none focus:ring-2 focus:ring-brand-teal focus:ring-offset-2 focus:ring-offset-brand-bg"
           >
             Cere o ofertă gratuită
-          </a>
-          <a
-            href="#galerie"
-            className="border border-white/30 text-white font-semibold px-8 py-4 rounded-full text-lg hover:border-brand-teal hover:text-brand-teal transition-colors focus:outline-none focus:ring-2 focus:ring-white/30"
-          >
-            Vezi galeria
           </a>
         </motion.div>
       </div>
